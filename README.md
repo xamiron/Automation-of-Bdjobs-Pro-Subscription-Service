@@ -1,5 +1,6 @@
 # Project Overview: Automation of Bdjobs Pro Subscription Service
 In this project, I developed an automation script using Selenium WebDriver in Java to interact with the Bdjobs Pro subscription service on the bdjobs.com platform. The script automates the process of logging in, navigating through the site, and interacting with various features of the Bdjobs Pro service.
+- Check List: https://docs.google.com/spreadsheets/d/1tp0bAegwHls_ncKk86ZnCvp9rs8qqKBX2RR9jQ6QawY/edit?usp=sharing
 
 # Key Features of the Automation Script
 # 1. Login Automation:
