@@ -4,7 +4,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.File;
 import java.time.Duration;
 import java.util.List;
@@ -32,13 +31,13 @@ public class test {
             loginButton.click();
 
             WebElement usernameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("TXTUSERNAME")));
-            usernameField.sendKeys("DemoTest");
+            usernameField.sendKeys("demotest");
 
             WebElement nextButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn.btn-success.btn-signin")));
             nextButton.click();
 
             WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("TXTPASS")));
-            passwordField.sendKeys("Demo123");
+            passwordField.sendKeys("demotest123");
 
             WebElement finalLoginButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn.btn-success.btn-signin.btn-block")));
             finalLoginButton.click();
@@ -59,8 +58,18 @@ public class test {
                 }
             }
             // Click on BdJobs Pro
-            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn.btn-primary.upb[href='https://mybdjobs.bdjobs.com/mybdjobs/package-info_fhm.asp']"))).click();
-            Thread.sleep(2000);
+            try {
+                // Try clicking the first element
+                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".btn.btn-primary.upb[href='https://mybdjobs.bdjobs.com/mybdjobs/package-info_fhm.asp']"))).click();
+                Thread.sleep(2000);
+            } catch (TimeoutException e) {
+                // If the first element is not found or clickable, go to the else block
+                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[data-target='#renewModal']"))).click();
+                Thread.sleep(2000);
+                wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#repurchasepmt"))).click();
+                Thread.sleep(2000);
+            }
+
             //Click on collapse indicator One
             wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[class='pro-img'] h3"))).click();
             Thread.sleep(2000);
@@ -122,34 +131,44 @@ public class test {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", MonthlyButton);
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", MonthlyButton);
             Thread.sleep(1000);
+            wait.until(ExpectedConditions.elementToBeClickable(By.id("package1"))).click();
+            Thread.sleep(1000);
 
             // Click on Proceed To Payment Button
             wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[type='submit']"))).click();
-
+/*
             // Click on radio yes/ no button
             wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("label[for='radio-two']"))).click();
             Thread.sleep(1000);
             wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("label[for='radio-one']"))).click();
+            Thread.sleep(1000);
+            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("label[for='radio-two']"))).click();
+            Thread.sleep(1000);
+            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btnPayOnline"))).click();
+            Thread.sleep(1000);
+*/
 
             // Check all payment method Bkash, Card & others  button clickable or not
             WebElement card =  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[class='cardssec'] div[class='crdstitle']")));
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",  card);
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", card);
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
             WebElement Other =  wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[class='otherssec'] div[class='crdstitle']")));
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",  Other);
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", Other);
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
+            // Pro buy-point  proceed with Bkash option
             WebElement Bkash = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("div[class='bkashsec'] div[class='crdstitle']")));
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",  Bkash);
+            // Scroll Bkash option into view
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", Bkash);
+            // Click Bkash option using JavaScript
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", Bkash);
             Thread.sleep(1000);
-
-            //Click on Confirm Payment Button
             wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#btnPayOnline"))).click();
             Thread.sleep(1000);
+
             // Click on Browser Back Button
             driver.navigate().back();
             // Click on Browser Back Button
@@ -174,6 +193,8 @@ public class test {
             }
             // Refresh the url
             driver.get(driver.getCurrentUrl());
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
